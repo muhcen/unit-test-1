@@ -1,5 +1,7 @@
 const app = require("./../app");
 let check = require("./../checkMaxPerSlot");
+let db = require("./../db.json");
+
 describe("test timeslots", () => {
   describe("test timeslots by default", () => {
     let res;
@@ -35,12 +37,9 @@ describe("test timeslots", () => {
 
   describe("when we pass arguments", () => {
     let res;
-    let date = "2021-08-19T17:00";
-    let maxDayRange = 10;
-    const serviceDelay = 3;
-    const day =
-      new Date(date).getDate() + serviceDelay - 1 - new Date().getDate();
-
+    let date = new Date();
+    let maxDayRange = 5;
+    const serviceDelay = 1;
     const startDate = "10:00 AM";
     const endDate = "06:00 PM";
     const slotInterval = 20;
@@ -72,15 +71,6 @@ describe("test timeslots", () => {
       exc();
       expect(res.length).toEqual(maxDayRange);
     });
-
-    //   it("number of day delay", () => {
-    //     expect(res[day].times.length).toEqual(0);
-    //   });
-    //   it("number of first array should be equal", () => {
-    //     let time = new Date(date).setHours(18, 0, 0) - new Date(date) - 1;
-    //     time = Math.floor(time / (slotInterval * 60 * 1000));
-    //     expect(res[day + 1].times.length).toEqual(time);
-    //   });
 
     it("test checkMaxPerSlot", () => {
       check.checkMaxPerSlot = jest.fn();
